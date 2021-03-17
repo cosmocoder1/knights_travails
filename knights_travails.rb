@@ -46,12 +46,42 @@ def render_board
   
   def map_board (matrix)
   
-    puts matrix.map.with_index { |row, j| row.map.with_index { |value, i| value = Node.new("#{j}, #{i})").data } }
+    #assign vertices to board spaces
+    populated_matrix = matrix.map.with_index { |row, j| row.map.with_index { |value, i| value = Node.new("#{j}, #{i})") } }.each_slice(8).to_a
+    
+    
   
-  end
+    #assign adjacent
+    board_adjacencies = populated_matrix.map.with_index { |row, i| row.map.with_index { |value, j| 
+      if populated_matrix[i + 2][j + 1]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+      if populated_matrix[i + 1][j + 2]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+      if populated_matrix[i + 2][j - 1]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+      if populated_matrix[i + 1][j - 2]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+      if populated_matrix[i - 2][j - 1]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+      if populated_matrix[i - 1][j - 2]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+      if populated_matrix[i - 2][j + 1]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+      if populated_matrix[i - 1][j + 2]
+        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      end
+        } }
+  
+  end  
   
   map_board(matrix)
-  
   
   def knight_moves (vertex_1, vertex_2)
   
