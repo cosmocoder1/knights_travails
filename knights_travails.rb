@@ -30,6 +30,8 @@ def render_board
   
   ]
   
+  
+  
   class Node 
     attr_accessor :data, :adjacent
   
@@ -47,36 +49,46 @@ def render_board
   def map_board (matrix)
   
     #assign vertices to board spaces
-    populated_matrix = matrix.map.with_index { |row, j| row.map.with_index { |value, i| value = Node.new("#{j}, #{i})") } }.each_slice(8).to_a
-    
-    
+    populated_matrix = matrix.map.with_index { |row, j| row.map.with_index { |value, i| value = Node.new("#{j}, #{i}") } }.each_slice(8).map { |i| i }
+  
   
     #assign adjacent
-    board_adjacencies = populated_matrix.map.with_index { |row, i| row.map.with_index { |value, j| 
-      if populated_matrix[i + 2][j + 1]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+    board_adjacencies = populated_matrix[0].map.with_index { |row, i| row.map.with_index { |value, j| 
+    puts "top"
+  
+      if populated_matrix[0][i + 2][j + 1] && (i + 2) < populated_matrix[0].length && (j + 1) < populated_matrix[0][i].length
+        puts "first block"
+        value.adjacent.push(populated_matrix[0][i + 2][j + 1]) 
       end
-      if populated_matrix[i + 1][j + 2]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      if populated_matrix[0][i + 1][j + 2] && (i + 1) < populated_matrix[0].length && (j + 2) < populated_matrix[0][i].length
+        puts "second block"
+        value.adjacent.push(populated_matrix[0][i + 1][j + 2]) 
       end
-      if populated_matrix[i + 2][j - 1]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      if populated_matrix[0][i + 2][j - 1] && (i + 2) < populated_matrix[0].length && (j - 1) < populated_matrix[0][i].length
+        puts "third block"
+        value.adjacent.push(populated_matrix[0][i + 2][j - 1]) 
       end
-      if populated_matrix[i + 1][j - 2]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      if populated_matrix[0][i + 1][j - 2] && (i + 1) < populated_matrix[0].length && (j - 2) < populated_matrix[0][i].length
+        puts "fourth block"
+        value.adjacent.push(populated_matrix[0][i + 1][j - 2]) 
       end
-      if populated_matrix[i - 2][j - 1]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      if populated_matrix[0][i - 2][j - 1] && (i - 2) < populated_matrix[0].length && (j - 1) < populated_matrix[0][i].length
+        puts "fifth block"
+        value.adjacent.push(populated_matrix[0][i - 2][j - 1]) 
       end
-      if populated_matrix[i - 1][j - 2]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      if populated_matrix[0][i - 1][j - 2] && (i - 1) < populated_matrix[0].length && (j - 2) < populated_matrix[0][i].length
+        puts "sixth block"
+        value.adjacent.push(populated_matrix[0][i - 1][j - 2]) 
       end
-      if populated_matrix[i - 2][j + 1]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      if populated_matrix[0][i - 2][j + 1] && (i - 2) < populated_matrix[0].length && (j + 1) < populated_matrix[0][i].length
+        puts "seventh block"
+        value.adjacent.push(populated_matrix[0][i - 2][j + 1]) 
       end
-      if populated_matrix[i - 1][j + 2]
-        value.adjacent.push(populated_matrix[i + 2][j + 1]) 
+      if populated_matrix[0][i - 1][j + 2] && (i - 1) < populated_matrix[0].length && (j + 2) < populated_matrix[0][i].length
+        puts "eighth block"
+        value.adjacent.push(populated_matrix[0][i - 1][j + 2]) 
       end
+      puts value.adjacent.map { |value| value.data }.inspect
         } }
   
   end  
