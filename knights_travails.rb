@@ -46,13 +46,26 @@ def render_board
   
   end
   
-  def map_board (matrix)
+  def map_board
+  
+    matrix = [
+  
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+  
+  ]
   
     #assign vertices to board spaces
     populated_matrix = matrix.map.with_index { |row, j|  row.map.with_index { |value, i| value = Node.new("#{i}, #{j}") } }.each_slice(8).map { |i| i }
   
     #assign adjacent
-    board_adjacencies = populated_matrix[0].map.with_index { |row, i| row.map.with_index { |value, j| 
+    populated_matrix[0].map.with_index { |row, i| row.map.with_index { |value, j| 
   
       if populated_matrix[0][i + 2] != nil && (i + 2) < populated_matrix[0].length && (j + 1) < 8
         value.adjacent.push(populated_matrix[0][i + 2][j + 1]) 
@@ -86,21 +99,62 @@ def render_board
         value.adjacent.push(populated_matrix[0][i - 1][j + 2]) 
       end
       
-      puts value.adjacent.map { |value| value.data }.inspect
         } }
+  
+      return populated_matrix
   
   end  
   
-  map_board(matrix)
+  def knight_moves 
   
-  def knight_moves (vertex_1, vertex_2)
+  #retrieval script  
+  =begin
+    puts "please enter x board coordinate for starting place..."
+    y_start = gets.chomp.to_i 
+    sleep(1)
+    puts "...please enter y board coordinate for starting place..."
+    x_start = 7 - gets.chomp.to_i
+    sleep(1)
+    puts "thank you.  now the x coordinate for the endpoint..."
+    y_end = gets.chomp.to_i
+    sleep(1)
+    puts "...and the y coordinate for the endpoint..."
+    x_end = 7 - gets.chomp.to_i
+  =end
   
-    #construct undirected graph representing every possible move of a knight on the board
+    y_start = 0
+    x_start = 0
+    y_end = 1
+    x_end = 2
+  
+    board = map_board
+  
     #take first parameter (vertex) and locate in the graph
+    vertex_1 = board[0][x_start][y_start]
+    puts vertex_1.adjacent
     #take second parameter (vertex) and locate in the graph
+    vertex_2 = board[0][x_end][y_end]
+    puts vertex_2.adjacent
     #locate path with fewest edges between vertices
+  
+    def find_end (node = vertex_1)
+  
+      if node.adjacent.include?(vertex_2)
+        puts vertex_2
+        return 1
+      end
+  
+  
+      
+        
+      
+    end  
+  
     #display each vertex from first location to second location
   
   end  
+  
+  
+  knight_moves 
   
   
