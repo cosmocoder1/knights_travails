@@ -137,19 +137,21 @@ def render_board
     puts vertex_2.adjacent
     #locate path with fewest edges between vertices
   
-    def find_end (node = vertex_1)
+    def find_end (node = vertex_1, i = -1)
   
       if node.adjacent.include?(vertex_2)
         puts vertex_2
         return 1
       end
   
+      i + 1
+      node = find_end(node.adjacent[i], i)
+      return node
   
-      
-        
-      
     end  
   
+  
+    find_end
     #display each vertex from first location to second location
   
   end  
