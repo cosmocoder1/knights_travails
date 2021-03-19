@@ -17,20 +17,6 @@ def render_board
   
   render_board
   
-  matrix = [
-  
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-  
-  ]
-  
-  
   
   class Node 
     attr_accessor :data, :adjacent
@@ -124,34 +110,30 @@ def render_board
   
     y_start = 0
     x_start = 0
-    y_end = 1
-    x_end = 2
+    y_end = 2
+    x_end = 0
   
     board = map_board
   
     #take first parameter (vertex) and locate in the graph
     vertex_1 = board[0][x_start][y_start]
-    puts vertex_1.adjacent
+    #puts vertex_1.adjacent.map { |value| value.data }
     #take second parameter (vertex) and locate in the graph
     vertex_2 = board[0][x_end][y_end]
-    puts vertex_2.adjacent
+    #puts vertex_2.adjacent.map { |value| value.data }
     #locate path with fewest edges between vertices
   
-    def find_end (node = vertex_1, i = -1)
-  
-      if node.adjacent.include?(vertex_2)
-        puts vertex_2
-        return 1
-      end
-  
-      i + 1
-      node = find_end(node.adjacent[i], i)
-      return node
+    def find_end (node_1, node_2, i = 1)
+      if node_1.adjacent.include?(node_2)
+        puts "#{i} moves"
+      else    
+        node = find_end(node_1, node_1.adjacent[i], i + 1)
+      end  
   
     end  
   
   
-    find_end
+    find_end(vertex_1, vertex_2)
     #display each vertex from first location to second location
   
   end  
