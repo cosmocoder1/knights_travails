@@ -108,27 +108,29 @@ def render_board
     x_end = 7 - gets.chomp.to_i
   =end
   
-    y_start = 0
     x_start = 0
-    y_end = 2
-    x_end = 0
+    y_start = 0
+    x_end = 7
+    y_end = 7
   
     board = map_board
   
     #take first parameter (vertex) and locate in the graph
-    vertex_1 = board[0][x_start][y_start]
-    #puts vertex_1.adjacent.map { |value| value.data }
+    vertex_1 = board[0][y_start][x_start]
     #take second parameter (vertex) and locate in the graph
-    vertex_2 = board[0][x_end][y_end]
-    #puts vertex_2.adjacent.map { |value| value.data }
+    vertex_2 = board[0][y_end][x_end]
     #locate path with fewest edges between vertices
+    def find_end (node_1, node_2)
+      
+      stack = []
+      node_1.adjacent.map { |value| stack.push(value) }
+      count = 0
   
-    def find_end (node_1, node_2, i = 1)
-      if node_1.adjacent.include?(node_2)
-        puts "#{i} moves"
-      else    
-        node = find_end(node_1, node_1.adjacent[i], i + 1)
-      end  
+    while stack.length > 0 do
+      if stack[0] = node_2
+        count += 1
+        count 
+      else  
   
     end  
   
