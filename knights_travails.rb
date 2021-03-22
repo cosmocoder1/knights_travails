@@ -125,17 +125,31 @@ def render_board
       stack = []
       node_1.adjacent.map { |value| stack.push(value) }
       count = 0
+      i = 0
+   
+      while stack.length > 0 do
+        puts stack[0]
+        puts node_2
+        if stack[0] === node_2
+          count += 1
+          return count   
+        else 
+          if stack[i].adjacent.include?(node_2) 
+            count += 1
+            return count
+          else
+            i += 1
+            stack.unshift
+          end  
+        end  
+      end
   
-    while stack.length > 0 do
-      if stack[0] = node_2
-        count += 1
-        count 
-      else  
+     
   
     end  
   
   
-    find_end(vertex_1, vertex_2)
+    puts find_end(vertex_1, vertex_2)
     #display each vertex from first location to second location
   
   end  
