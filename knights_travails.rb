@@ -79,6 +79,16 @@ def map_board
 
 end  
 
+class Knight 
+  attr_accessor :location, :stack, :checked, :path
+
+  @location = []
+  @stack = []
+  @checked = []
+  @path = []
+
+end  
+
 def knight_moves 
 
 #retrieval script  
@@ -108,41 +118,30 @@ def knight_moves
   #take second parameter (vertex) and locate in the graph
   vertex_2 = board[0][y_end][x_end]
   #locate path with fewest edges between vertices
-  def find_end (node_1, node_2)
-    
-    stack = []
-    checked = []
-    node_1.adjacent.map { |value| stack.push(value) }
-    count = 0
+
+  def traverse (node_1, node_2)
+
+    target = node_2
+    knight = Knight.new
+    knight.location = node_1
+    node_1.adjacent.map { |vertex| knight.stack.push(vertex) }
+    i = 0
+    j = 0
  
-    while stack.length > 0 do
-      puts "loop"
-
-      if stack[0] === node_2
-        count += 1
-        return "#{count} moves"  
-      elsif stack[0].adjacent.include?(node_2)
-        count += 2
-        return "#{count} moves"
+    while knight.stack.length > 0 do
+    
+      if knight.stack[0] === node_2
+        knight.path.push(node_2) 
       else
-        puts stack[0].data
-        #catch redundancies
-        checked.push(stack[0].data)
-        #add new vertices to cue
-        stack[0].adjacent.map { |value| if checked.include?(value.data) === false
-        stack.push(value)
-        end }
-
-        stack.shift
-        count += 1
-      end
-      
-    end   
+        knight.checked.push(knight.stack[0])
+      end  
+    end  
+ 
 
   end  
 
 
-  puts find_end(vertex_1, vertex_2)
+  puts traverse(vertex_1, vertex_2)
   #display each vertex from first location to second location
 
 end  
