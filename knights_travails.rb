@@ -12,7 +12,7 @@ matrix =
 
 
 
-class Node 
+class Knight 
   attr_accessor :adjacent, :location, :previous
 
   ADJACENCIES = [ [1, 2], [-1, 2], [1, -2], [-1, -2], [2, 1], [-2, 1], [-2, -1], [2, -1] ]
@@ -30,7 +30,7 @@ class Node
     ADJACENCIES.map { |element| [element[0] + @location[0], element[1] + @location[1]] }
     .reject { |element| element[0] > 7 || element[0] < 0 || element[1] > 7 || element[1] < 0 }
     .reject { |element| @@checked.include?(element) }
-    .map { |element| Node.new(element, self) }
+    .map { |element| Knight.new(element, self) }
 
   end  
 
@@ -45,24 +45,26 @@ def trace_path (node, node_2)
 
     until node.previous === nil do
       node = node.previous
+      path.push(node)
       count += 1
+      
     end  
 
     location = path.map { |value| value.location }
-    puts "you made it in #{count} moves - your path was #{location.reverse}"
+    puts "you made it in #{count} moves - your path is #{location.reverse}"
        
   end   
 
 
 def knight_moves 
 
-  puts "please enter x board coordinate for starting place..."
+  puts "enter x board coordinate for starting place..."
   x_start = gets.chomp.to_i 
   sleep(1)
-  puts "...please enter y board coordinate for starting place..."
+  puts "...enter y board coordinate for starting place..."
   y_start = gets.chomp.to_i
   sleep(1)
-  puts "thank you.  now the x coordinate for the endpoint..."
+  puts "now enter x coordinate for the endpoint..."
   x_end = gets.chomp.to_i
   sleep(1)
   puts "...and the y coordinate for the endpoint..."
@@ -73,7 +75,7 @@ def knight_moves
 
   queue = []
   target = node_2
-  knight = Node.new(node_1, nil)
+  knight = Knight.new(node_1, nil)
 
   while knight.location != target do
     knight.adjacent.map { |value| queue.push(value) }
