@@ -1,41 +1,75 @@
-class Node 
-  attr_accessor :data, :adjacent, :location, :previous
+#for visualisation 
+matrix = 
 
-  TRANSFORMATIONS = [ [1, 2], [-1, 2], [1, -2], [-1, -2], [2, 1], [-2, 1], [-2, -1], [2, -1] ]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+[0, 0, 0, 0, 0, 0, 0, 0]
+
+
+
+class Node 
+  attr_accessor :adjacent, :location, :previous
+
+  ADJACENCIES = [ [1, 2], [-1, 2], [1, -2], [-1, -2], [2, 1], [-2, 1], [-2, -1], [2, -1] ]
+
+  @@checked = []
 
   def initialize (location, previous)
     @location = location
     @adjacent = []
-    @checked = []
-    @previous = nil
+    @previous = previous
   end
 
   def adjacent
-    TRANSFORMATIONS.map { |element| [element[0] + @location[0], element[1] + @location[1]] }
-    .map { |element| element.delete_if { |element| element[0] > 7 || element[0] < 1 || element[1] > 7 || element[1] < 1 } }
-    .map { |element| element.delete_if { |element| @checked.include?(element) } }.map { |element| @adjacent.push(Node.new(element, self)) }
+
+    ADJACENCIES.map { |element| [element[0] + @location[0], element[1] + @location[1]] }
+    .reject { |element| element[0] > 7 || element[0] < 0 || element[1] > 7 || element[1] < 0 }
+    .reject { |element| @@checked.include?(element) }
+    .map { |element| Node.new(element, self) }
+
   end  
 
-  
 end
 
+def trace_path (node, node_2)
 
-def knight_moves (node_1, node_2)
+    puts "tracing path..."
+    sleep(1)
+    count = 0
+    path = []
 
-#retrieval script  
-=begin
+    until node.previous === nil do
+      node = node.previous
+      count += 1
+    end  
+
+    location = path.map { |value| value.location }
+    puts "you made it in #{count} moves - your path was #{location.reverse}"
+       
+  end   
+
+
+def knight_moves 
+
   puts "please enter x board coordinate for starting place..."
-  y_start = gets.chomp.to_i 
+  x_start = gets.chomp.to_i 
   sleep(1)
   puts "...please enter y board coordinate for starting place..."
-  x_start = 7 - gets.chomp.to_i
+  y_start = gets.chomp.to_i
   sleep(1)
   puts "thank you.  now the x coordinate for the endpoint..."
-  y_end = gets.chomp.to_i
+  x_end = gets.chomp.to_i
   sleep(1)
   puts "...and the y coordinate for the endpoint..."
-  x_end = 7 - gets.chomp.to_i
-=end
+  y_end = gets.chomp.to_i
+
+  node_1 = [x_start, y_start]
+  node_2 = [x_end, y_end]
 
   queue = []
   target = node_2
@@ -43,27 +77,14 @@ def knight_moves (node_1, node_2)
 
   while knight.location != target do
     knight.adjacent.map { |value| queue.push(value) }
-    knight.location = queue[0]
-    queue.shift
+    knight = queue.shift
   end
- 
-  def trace_path (node)
-
-    count = 0
-    path = []
-    until node.previous === nil
-    node = node.previous
-    count += 1
-    path.push(node)
-    end
-
-    return "you made it in #{count} moves - your path is #{path}"
-      
-  end    
+   
+  trace_path(queue[0], node_2)
 
 end
 
 
-knight_moves([0, 0], [7, 7])
+knight_moves
 
 
